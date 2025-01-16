@@ -27,6 +27,30 @@ async function main() {
       },
     },
   })
+  const alice2 = await prisma.user.upsert({
+    where: { number: '4444444444' },
+    update: {},
+    create: {
+      number: '4444444444',
+      password: await bcrypt.hash('alice', 10),
+      name: 'alice2',
+      Balance: {
+        create: {
+            amount: 40000,
+            locked: 0
+        }
+      },
+      OnRampTransaction: {
+        create: {
+          startTime: new Date(),
+          status: "Success",
+          amount: 40000,
+          token: "token__3",
+          provider: "HDFC Bank",
+        },
+      },
+    },
+  })
   const bob = await prisma.user.upsert({
     where: { number: '2222222222' },
     update: {},
@@ -51,7 +75,7 @@ async function main() {
       },
     },
   })
-  console.log({ alice, bob })
+  console.log({ alice, bob, alice2 })
 }
 main()
   .then(async () => {
