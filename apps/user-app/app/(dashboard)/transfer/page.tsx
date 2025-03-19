@@ -17,16 +17,12 @@ type OnRampTransactionType = {
     provider: string;
 };
 
-async function getBalance(): Promise<BalanceType> {
-    const session = await getServerSession(authOptions);
-    if (!session?.user?.id) {
-        return { amount: 0, locked: 0 }; // Handle case where user is not authenticated
-    }
+// ✅ Make this function Server-Safe
+async function getBalance(sessionUserId: number | null): Promise<BalanceType> {
+    if (!sessionUserId) return { amount: 0, locked: 0 };
 
     const balance = await prisma.balance.findFirst({
-        where: {
-            userId: Number(session.user.id)
-        }
+        where: { userId: sessionUserId }
     });
 
     return {
@@ -35,16 +31,12 @@ async function getBalance(): Promise<BalanceType> {
     };
 }
 
-async function getOnRampTransactions(): Promise<OnRampTransactionType[]> {
-    const session = await getServerSession(authOptions);
-    if (!session?.user?.id) {
-        return []; // Return empty array if user is not authenticated
-    }
+// ✅ Make this function Server-Safe
+async function getOnRampTransactions(sessionUserId: number | null): Promise<OnRampTransactionType[]> {
+    if (!sessionUserId) return [];
 
     const txns = await prisma.onRampTransaction.findMany({
-        where: {
-            userId: Number(session.user.id)
-        }
+        where: { userId: sessionUserId }
     });
 
     return txns.map((t) => ({
@@ -55,9 +47,13 @@ async function getOnRampTransactions(): Promise<OnRampTransactionType[]> {
     }));
 }
 
+// ✅ Ensure this is a Server Component
 export default async function Page() {
-    const balance = await getBalance();
-    const transactions = await getOnRampTransactions();
+    const session = await getServerSession(authOptions);
+    const userId = session?.user?.id ? Number(session.user.id) : null;
+
+    const balance = await getBalance(userId);
+    const transactions = await getOnRampTransactions(userId);
 
     return (
         <div className="w-screen">
