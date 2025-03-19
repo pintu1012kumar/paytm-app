@@ -1,59 +1,53 @@
-"use client";
+'use client';
 
-import { useRouter } from "next/navigation";
+import React from 'react';
 
-export default function Home() {
-  const router = useRouter();
-
+const Dashboard = () => {
   return (
-    <div className="w-full min-h-screen flex flex-col items-center justify-center bg-gray-900 py-10">
-     
-      <div className="text-center text-white px-6">
-        <h1 className="text-6xl font-extrabold drop-shadow-lg leading-tight">
-          Welcome to Paytm App
-        </h1>
-        <p className="mt-4 text-xl text-gray-300 max-w-3xl mx-auto">
-          Send & receive money instantly with just a tap. Secure, fast, and easy transactions powered by cutting-edge technology.
-        </p>
+    <div className="w-full h-screen bg-gray-50 p-6">
+      {/* Header */}
+      <h1 className="text-2xl font-bold text-purple-600">Good afternoon, Pintu</h1>
+      
+      {/* Portfolio Section */}
+      <div className="bg-white shadow-lg rounded-xl p-6 mt-4">
+        <p className="text-gray-500">Portfolio value</p>
+        <h2 className="text-3xl font-bold">$0.00</h2>
+        <div className="border-t mt-4">
+          <p className="text-center text-gray-500 py-4">$0.00</p>
+        </div>
       </div>
-
-     
-      <div className="w-full flex justify-center my-12">
-        <img
-          src="https://www.paytmbank.com/_next/static/media/Banner.cd2d3eb3.jpg"
-          alt="Paytm Banner"
-          className="w-full max-w-4xl rounded-xl shadow-2xl"
-        />
+      
+      {/* Timeframe Filters */}
+      <div className="flex space-x-2 mt-4">
+        {['1W', '1M', '3M', '6M', '1Y', 'ALL'].map((time) => (
+          <button key={time} className="px-3 py-1 bg-gray-200 rounded-md text-sm font-medium focus:bg-purple-600 focus:text-white">
+            {time}
+          </button>
+        ))}
       </div>
-
-
-      <div className="bg-white p-8 rounded-3xl shadow-xl text-center max-w-xl">
-        <h2 className="text-4xl font-semibold text-gray-800">
-          Why Use Paytm?
-        </h2>
-        <ul className="mt-6 space-y-4 text-lg text-gray-700">
-          <li className="flex items-center justify-center gap-2">
-            ✅ Instant & Secure P2P Transfers
-          </li>
-          <li className="flex items-center justify-center gap-2">
-            ✅ Pay Bills, Recharge & Shop Online
-          </li>
-          <li className="flex items-center justify-center gap-2">
-            ✅ Trusted by Millions
-          </li>
-          <li className="flex items-center justify-center gap-2">
-            ✅ Cashback & Rewards
-          </li>
-        </ul>
-
- 
-        <button
-          onClick={() => router.push("/transfer")}
-          className="mt-6 bg-blue-600 text-white font-bold py-3 px-12 rounded-full shadow-lg hover:bg-blue-700 transition-all transform hover:scale-105"
-        >
-          + Add Money
-        </button>
+      
+      {/* Action Buttons */}
+      <div className="flex justify-around mt-6">
+        {['Buy', 'Sell', 'Convert', 'Deposit', 'Withdraw'].map((action, index) => (
+          <button key={index} className="flex flex-col items-center">
+            <div className="w-12 h-12 bg-purple-600 text-white flex justify-center items-center rounded-full shadow-md">
+              {action[0]}
+            </div>
+            <span className="text-sm mt-2 font-medium text-gray-600">{action}</span>
+          </button>
+        ))}
+      </div>
+      
+      {/* Info Card */}
+      <div className="bg-white shadow-lg rounded-xl p-4 mt-6 flex items-center">
+        <div className="flex-1">
+          <h3 className="text-lg font-bold">Set up recurring buys</h3>
+          <p className="text-gray-500 text-sm">Schedule regular crypto purchases to balance market fluctuations.</p>
+        </div>
+        <button className="px-4 py-2 bg-purple-600 text-white rounded-lg">Transfer Now</button>
       </div>
     </div>
   );
-}
+};
+
+export default Dashboard;
