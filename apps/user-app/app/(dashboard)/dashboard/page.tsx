@@ -44,7 +44,7 @@ const Dashboard = () => {
           <h3 className="text-lg font-bold">Set up recurring buys</h3>
           <p className="text-gray-500 text-sm">Schedule regular crypto purchases to balance market fluctuations.</p>
         </div>
-        <button className="px-4 py-2 bg-purple-600 text-white rounded-lg">Transfer Now</button>
+        <button className="px-4 py-2 bg-purple-600 text-white rounded-lg">Transfer </button>
       </div>
     </div>
   );
